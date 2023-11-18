@@ -1,35 +1,15 @@
-import { db } from "@/lib/db";
+import { Separator } from "@/components/ui";
 
-import { createBoard, deleteBoard } from "@/actions";
+import { BoardList, Info } from "./_components";
 
-import { Button } from "@/components/ui";
-import { Form } from "./form";
-
-export default async function OrganizationPage() {
-  const boards = await db.board.findMany();
-
+export default function OrganizationPage() {
   return (
-    <div className="flex flex-col space-y-4">
-      <h1>Organization Page</h1>
+    <div className="w-full mb-20">
+      <Info />
+      <Separator className="my-4" />
 
-      <Form />
-
-      <div className="space-y-2">
-        {boards.map((board) => {
-          const deleteBoardWithId = deleteBoard.bind(null, board.id);
-          return (
-            <form
-              key={board.id}
-              action={deleteBoardWithId}
-              className="flex items-center gap-x-2"
-            >
-              <p>Board name: {board.title}</p>
-              <Button type="submit" size="sm" variant="destructive">
-                Delete
-              </Button>
-            </form>
-          );
-        })}
+      <div className="px-2 md:px-4">
+        <BoardList />
       </div>
     </div>
   );
